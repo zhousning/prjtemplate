@@ -4,15 +4,15 @@
   .container-fluid.p-0
     .row
       .col-md-12
-        %table.text-center.table-bordered.table-sm{:'data-toggle' => "table", :"data-pagination"=>"true", :"data-search" => "true",:'data-advanced-search'=>"true", :'data-id-table'=>"advancedTable"}
-          %thead.thead-light
+        -#
+          %table.text-center.table-striped.table-sm{:'data-toggle' => "table", :"data-pagination"=>"true", :"data-search" => "true",:'data-advanced-search'=>"true", :'data-id-table'=>"advancedTable"}
+        %table.text-center.table-striped.table-sm{:'data-toggle' => "table", :"data-pagination"=>"true", :'data-id-table'=>"advancedTable"}
+          %thead
             %tr
               %th{:scope => "col"} #
             
               %th{:scope => "col"}
                 = Setting.templates.name
-              %th{:scope => "col"}
-                = Setting.templates.nest
               %th{:scope => "col"}
                 = Setting.templates.image
               %th{:scope => "col"}
@@ -32,6 +32,7 @@
               %th{:scope => "col"}
                 = Setting.templates.admin
               %th{:scope => "col"}
+                设置
           %tbody
             - @templates.each_with_index do |template, index|
               %tr
@@ -39,8 +40,6 @@
                   = index+1
                 %td
                   = template.name
-                %td
-                  = template.nest
                 %td
                   = template.image
                 %td
@@ -62,13 +61,9 @@
                 %td
                   .container-fluid
                     .row
-                      = link_to template_path(template), :class => "text-info col" do
-                        = fa_icon "search"
-                      = link_to edit_template_path(template), :class => "text-success col" do
-                        = fa_icon "edit"
-                      = link_to template, :method => :delete, :data => {:confirm => "确定删除吗?"}, :class => "text-danger col" do
-                        = fa_icon "trash"
-                      = link_to produce_template_path(template), :class => "text-primary col" do
-                        = fa_icon "wrench"
+                      = link_to "编辑", edit_template_path(template), :class => "button button-highlight button-small mr-1"
+                      = link_to "详细", template_path(template), :class => "button button-primary button-small mr-1"
+                      = link_to "删除", template, :method => :delete, :data => {:confirm => "确定删除吗?"}, :class => "button button-caution button-small mr-1"
+                      = link_to "导出", produce_template_path(template), :class => "text-primary col"
 
 = render "layouts/control_panel"

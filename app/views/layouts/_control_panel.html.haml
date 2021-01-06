@@ -9,7 +9,7 @@
           -#- if can? :update, controller_name.singularize.capitalize.constantize
           - if "#{action_name}" == Setting.systems.index
             = fa_icon "list", text: t(controller_name + "." + action_name + '.title')
-            = link_to "/#{controller_name}/new", :class => "button button-border button-rounded button-primary pull-right bg-white" do
+            = link_to "/#{controller_name}/new", :class => "button pull-right bg-white" do
               = fa_icon "plus", text: Setting.systems.btn_new, right: false 
           - elsif "#{action_name}" == Setting.systems.new
             = fa_icon "plus-square-o", text: t(controller_name + "." + action_name + '.title')
