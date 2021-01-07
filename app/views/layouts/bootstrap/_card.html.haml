@@ -1,19 +1,6 @@
 .card.shadow-sm.border-0
-  - if "#{action_name}" == Setting.systems.index
-    .card-header.rounded-0.pt-2.border-bottom-0.bg-white
-      = yield :card_header
-  - elsif "#{action_name}" == Setting.systems.new
-    .card-header.rounded-0
-      = yield :card_header
-  - elsif "#{action_name}" == Setting.systems.show
-    .card-header.rounded-0
-      = yield :card_header
-  - elsif "#{action_name}" == Setting.systems.edit
-    .card-header.rounded-0
-      = yield :card_header
-  - else
-    .card-header.rounded-0
-      = yield :card_header
+  .card-header.rounded-0.pt-2.border-bottom-0.bg-white
+    = yield :card_header
   .card-body.px-2.pt-0
     = yield :card_body
 -#

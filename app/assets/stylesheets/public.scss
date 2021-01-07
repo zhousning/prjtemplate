@@ -147,6 +147,7 @@ right connector from last child*/
 }
 .blah{
   height:100px;
+  width: 100px;
 }
 .nestd-item {
     position:relative;
@@ -157,10 +158,8 @@ right connector from last child*/
     position: absolute;
     right:10px;
     top:10px;
-    background:red;
     text-align: center;
-    border-radius: 30px 30px 30px 30px;
-    color:white;
+    color:red;
     padding:5px 10px;
     font-size:20px;
 }
