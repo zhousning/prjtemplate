@@ -4,6 +4,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 # before_action :configure_account_update_params, only: [:update]
 
   def create
+    super
     #role = Role.find(params['company'])
     #if role && role.name != Setting.roles.super_admin
     #  super do |resource|

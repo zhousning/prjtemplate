@@ -91,6 +91,10 @@ Rails.application.routes.draw do
     get :start, :on => :member
   end
   resources :selectors
+  resources :products do
+    get :download_append, :on => :member
+    post :upload, :on => :member
+  end
   resources :flower
 
   root :to => 'home#index'
