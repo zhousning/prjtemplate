@@ -23,4 +23,8 @@ class <%= @mc %> < ActiveRecord::Base
   has_one :<%= relate_arr[1] %>
 <% end %>
 <% end %>
+
+<% if @crtuser %> 
+  belongs_to :user
+<% end %> 
 end

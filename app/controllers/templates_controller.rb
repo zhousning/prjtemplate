@@ -77,6 +77,7 @@ class TemplatesController < ApplicationController
     cond += "-n " + @template.cn_name + " " + 
            "-i " + @template.image.to_s + " " +
            "-d " + @template.attachment.to_s + " " +
+           "-cu " + @template.crtuser.to_s + " " +
            "-x " + @template.index.to_s + " " +
            "-w " + @template.new.to_s + " " +
            "-e " + @template.edit.to_s + " " +
@@ -136,7 +137,7 @@ class TemplatesController < ApplicationController
 
   private
     def template_params
-      params.require(:template).permit( :name, :cn_name, :nest, :image, :one_image, :one_attachment, :attachment, :index, :new, :edit, :show, :form, :js, :scss, :admin, nests_attributes: nest_params, natures_attributes: nature_params, relates_attributes: relate_params)
+      params.require(:template).permit( :name, :cn_name, :nest, :image, :one_image, :one_attachment, :attachment, :crtuser, :index, :new, :edit, :show, :form, :js, :scss, :admin, nests_attributes: nest_params, natures_attributes: nature_params, relates_attributes: relate_params)
     end
   
     def nature_params

@@ -39,6 +39,7 @@ mysetting:
     attachment: 多个附件
     one_image: 一个图片
     one_attachment: 一个附件
+    crtuser: 是否当前用户
     index: 列表
     new: 新建
     edit: 编辑

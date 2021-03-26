@@ -16,6 +16,8 @@ class Rails::ItemGenerator < Rails::Generators::Base
   class_option :image, :aliases => '-i', :type => :boolean, :default => false 
   class_option :attachment, :aliases => '-d', :type => :boolean, :default => false 
 
+  class_option :crtuser, :aliases => '-cu', :type => :boolean, :default => true 
+
   class_option :index, :aliases => '-x', :type => :boolean, :default => true 
   class_option :new, :aliases => '-w', :type => :boolean, :default => true 
   class_option :edit, :aliases => '-e', :type => :boolean, :default => true 
@@ -43,6 +45,7 @@ class Rails::ItemGenerator < Rails::Generators::Base
     @one_enclosure = options[:one_image]
     @attachment = options[:attachment]
     @one_attachment = options[:one_attachment]
+    @crtuser = options[:crtuser]
 
     @attrs = []
     columns.each do |column|
@@ -52,8 +55,8 @@ class Rails::ItemGenerator < Rails::Generators::Base
     name = Time.now.strftime('%Y%m%d%H%M%S') + "_create_" + @mpu
     @relates   = options[:relates]
     @columns   = columns
-    template 'migration.template', "db/migrate/#{name}.rb", @mpc, @mpu, @relates, @columns, @one_enclosure, @one_attachment
-    template 'model.template', "app/models/#{@mu}.rb", @attrs, @mu, @mc, @mpc, @mpu, @enclosure, @one_enclosure, @attachment, @one_attachment, @relates
+    template 'migration.template', "db/migrate/#{name}.rb", @mpc, @mpu, @relates, @columns, @one_enclosure, @one_attachment, @crtuser
+    template 'model.template', "app/models/#{@mu}.rb", @attrs, @mu, @mc, @mpc, @mpu, @enclosure, @one_enclosure, @attachment, @one_attachment, @relates, @crtuser
   end
 
   def add_to_enclosure
@@ -139,6 +142,7 @@ class Rails::ItemGenerator < Rails::Generators::Base
     @attachment = options[:attachment]
     @one_attachment = options[:one_attachment]
     @index = options[:index]
+    @crtuser = options[:crtuser]
     @new  = options[:new]
     @edit = options[:edit]
     @show = options[:show]
@@ -158,7 +162,7 @@ class Rails::ItemGenerator < Rails::Generators::Base
       @attrs << column.slice(/[^:]+/)
     end
 
-    template 'controller.template', "app/controllers/#{controller_name}_controller.rb", @attrs, @mu, @mc, @mpc, @mpu, @enclosure, @attachment, @one_enclosure, @one_attachment, @index, @new, @edit, @show, @fields
+    template 'controller.template', "app/controllers/#{controller_name}_controller.rb", @attrs, @mu, @mc, @mpc, @mpu, @enclosure, @attachment, @one_enclosure, @one_attachment, @index, @crtuser, @new, @edit, @show, @fields
 
     if @index
       template 'index.template', "app/views/#{controller_name}/index.html.haml", @attrs, @mu, @mc, @mpc, @mpu, @enclosure, @attachment, @one_enclosure, @one_attachment
