@@ -66,12 +66,14 @@ class TemplatesController < ApplicationController
       nature_str = ""
       label = "-l "
       tag = "-t "
+      required = "-u "
       @natures.each do |nature|
         nature_str += nature.name + ":" + nature.data_type + " "
         label += nature.title + " "
         tag += nature.tag + " "
+        required += nature.required.to_s + " "
       end
-      cond += nature_str + label + tag + " "
+      cond += nature_str + label + tag + required + " "
     end
 
     cond += "-n " + @template.cn_name + " " + 
@@ -101,13 +103,16 @@ class TemplatesController < ApplicationController
       @template.nests.each do |nest|
         attr_arr = []
         tag_arr = []
+        required_arr = []
         cache = Hash.new
         nest.properties.each do |p|
           attr_arr << p.name
           tag_arr << p.tag
+          required_arr << p.required
         end
         cache['attr'.to_sym] = attr_arr
         cache['tag'.to_sym] = tag_arr
+        cache['required'.to_sym] = required_arr
         property[nest.name.to_sym] = cache 
       end
       prpty = property.to_json.gsub(/"/, '\"')
@@ -141,7 +146,7 @@ class TemplatesController < ApplicationController
     end
   
     def nature_params
-      [:id, :name, :title, :tag, :data_type, :_destroy]
+      [:id, :name, :title, :tag, :data_type, :required, :_destroy]
     end
   
     def relate_params
@@ -153,7 +158,7 @@ class TemplatesController < ApplicationController
     end
   
     def property_params
-      [:id, :name, :tag, :_destroy]
+      [:id, :name, :tag, :required, :_destroy]
     end
 end
 

@@ -5,6 +5,7 @@ class CreateNatures < ActiveRecord::Migration
       t.string :data_type
       t.string :title
       t.string :tag
+      t.boolean :required
 
       t.references :template
 

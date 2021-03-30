@@ -1,3 +1,4 @@
 $(".<%= @mpu %>").ready(function() {
-
+  if ($(".<%= @mpu %>").length > 0) {
+  }
 });

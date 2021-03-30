@@ -5,6 +5,7 @@ class CreateProperties < ActiveRecord::Migration
       t.string :name,  null: false, default: Setting.systems.default_str
     
       t.string :tag,  null: false, default: Setting.systems.default_str
+      t.boolean :required
     
 
     

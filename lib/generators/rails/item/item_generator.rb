@@ -10,6 +10,7 @@ class Rails::ItemGenerator < Rails::Generators::Base
 
   class_option :label, :aliases => '-l', :type => :array, :default => []
   class_option :tag, :aliases => '-t', :type => :array, :default => []
+  class_option :required, :aliases => '-u', :type => :array, :default => []
 
   class_option :one_image, :aliases => '-b', :type => :array, :default => []
   class_option :one_attachment, :aliases => '-k', :type => :array, :default => [] 
@@ -124,6 +125,9 @@ class Rails::ItemGenerator < Rails::Generators::Base
       route_str += "    get :download_append, :on => :member\n"
     end
 
+    route_str += "    get :xls_download, :on => :collection\n"
+    route_str += "    post :parse_excel, :on => :collection\n"
+
     route_str += "  end\n" + "  " + flower
 
     route_file = File.read(route_attachment)
@@ -208,6 +212,7 @@ class Rails::ItemGenerator < Rails::Generators::Base
       @nest = field
       @field_attr = value['attr']
       @field_tag = value['tag']
+      @field_required = value['required']
       template '_fields.template', "app/views/#{controller_name}/_#{field}_fields.html.haml", @nest, @field_attr, @field_tag
     end
 

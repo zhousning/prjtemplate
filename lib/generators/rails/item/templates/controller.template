@@ -114,6 +114,48 @@ class <%= @mpc %>Controller < ApplicationController
     end
   <% end %>
 
+  def xls_download
+    send_file File.join(Rails.root, "public", "templates", "表格模板.xlsx"), :filename => "表格模板.xlsx", :type => "application/force-download", :x_sendfile=>true
+  end
+
+  def parse_excel
+    excel = params["excel_file"]
+    tool = ExcelTool.new
+    results = tool.parseExcel(excel.path)
+
+    first_name = ""
+    second_name = ""
+    idno = "" 
+    mtrl_name = ""
+    pet_name = ""
+    model_no = ""
+    unit = ""
+    @frst_cache = nil 
+    @secd_cache = nil 
+
+    results["Sheet1"][1..-1].each do |items|
+      items.each do |k, v|
+        if !(/A/ =~ k).nil?
+          first_name = v.nil? ? "" : v 
+        elsif !(/B/ =~ k).nil?
+          second_name = v.nil? ? "" : v 
+        elsif !(/C/ =~ k).nil?
+          idno = v.nil? ? "" : v 
+        elsif !(/D/ =~ k).nil?
+          mtrl_name = v.nil? ? "" : v 
+        elsif !(/E/ =~ k).nil?
+          pet_name = v.nil? ? "" : v 
+        elsif !(/F/ =~ k).nil?
+          model_no = v.nil? ? "" : v 
+        elsif !(/G/ =~ k).nil?
+          unit = v.nil? ? "" : v 
+          break
+        end
+      end
+    end
+    redirect_to list_ctg_mtrls_path 
+  end 
+
   private
     def <%= @mu %>_params
       params.require(:<%= @mu %>).permit(<% @attrs.each_with_index do |attr, index| %> :<%= attr %><%= index == @attrs.size-1 ? '' : ','%><% end %><% @one_enclosure.each do |e| %> , :<%= e %><% end %><% @one_attachment.each do |a| %> , :<%= a %><% end %><% if @attachment %> , attachments_attributes: attachment_params<% end %><% if @enclosure %> , enclosures_attributes: enclosure_params<% end %><% @fields.each do |field, value| %>, <%= field.pluralize %>_attributes: <%= field %>_params<% end %>)
